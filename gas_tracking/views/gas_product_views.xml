@@ -1,0 +1,54 @@
+<odoo>
+  <data>
+    <record id="view_gas_cylinder_form" model="ir.ui.view">
+        <field name="name">gas.cylinder.form</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="inside">
+                <group string="Gas Cylinder Information">
+                    <field name="state"/>
+                    <field name="last_refill_date"/>
+                </group>
+
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_gas_cylinder_tree" model="ir.ui.view">
+        <field name="name">gas.cylinder.tree</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_tree_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="inside">
+                <field name="state"/>
+                <field name="last_refill_date"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_product_template_search" model="ir.ui.view">
+      <field name="name">product.template.search.in_use</field>
+      <field name="model">product.template</field>
+      <field name="inherit_id" ref="product.product_template_search_view"/>
+      <field name="arch" type="xml">
+        <xpath expr="//search" position="inside">
+          <!-- Filter for state = 'in_use' and due_date > today -->
+          <filter name="in_use_due_date_filter" string="Expiring Due Date"
+                  domain="[('state', '=', 'in_use')]"/> 
+        </xpath>
+      </field>
+    </record>
+    
+    <!-- gas.cylinder action window -->
+    <record id="gas_cylinder_action" model="ir.actions.act_window">
+      <field name="name">Product List</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">product.template</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem id="gas_product_menu_act" name="Product List" parent="product_menu_categ" action="gas_cylinder_action" sequence="1"/>
+  </data>
+</odoo>
