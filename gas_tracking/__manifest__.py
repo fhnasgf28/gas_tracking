@@ -37,5 +37,7 @@
         'views/gas_staff_views.xml',
         'views/gas_store_views.xml',
         'views/gas_transaction_views.xml',
+        'views/gas_overview_views.xml',
+        'views/purchase_views.xml',
     ],
 }

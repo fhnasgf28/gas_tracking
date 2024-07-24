@@ -55,7 +55,7 @@
                 <field name="product_id" string="Product"/>
                 <field name="customer_id" string="Customer"/>
                 <filter name="overdue" string="Overdue" domain="[('transaction_state', '=', 'in_use'), ('due_date','&lt;=', datetime.datetime.combine(context_today(), datetime.time(0,0,0))),('due_date','&lt;=', datetime.datetime.combine(context_today(), datetime.time(23,59,59)))]"/>
-                <filter name="late_by_7_days" string="Late by 7 Days" domain="[('transaction_state', '=', 'in_use'), ('due_date', '&lt;=', (datetime.datetime.now() - datetime.timedelta(days=7)).strftime('%Y-%m-%d'))]"/>
+                <filter name="late_by_7_days" string="Late by 7 Days" domain="[('transaction_state', '=', 'in_use'), ('due_date', '&lt;', (datetime.datetime.now() - datetime.timedelta(days=7)).strftime('%Y-%m-%d'))]"/>
             </search>
         </field>
     </record>
@@ -66,6 +66,9 @@
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">gas.transaction</field>
         <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_gas_transaction_search"/>
+        <field name="context">{'search_default_late_by_7_days': 1}</field>
+
     </record>
 
     <!-- Menu Item for Transactions -->

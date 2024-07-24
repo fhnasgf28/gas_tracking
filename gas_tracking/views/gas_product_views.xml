@@ -24,9 +24,28 @@
                 <field name="state"/>
                 <field name="last_refill_date"/>
             </xpath>
+            <xpath expr="//field[@name='standard_price']" position="attributes">
+                <attribute name="invisible">1</attribute>                
+            </xpath>
         </field>
     </record>
-
+    <record id="view_gas_cylinder_stock_tree" model="ir.ui.view">
+        <field name="name">gas.cylinder.tree</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="stock.view_stock_product_template_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='responsible_id']" position="attributes">
+                <attribute name="invisible">1</attribute>                
+            </xpath>
+            <xpath expr="//field[@name='virtual_available']" position="attributes">
+                <attribute name="invisible">1</attribute>                
+            </xpath>
+            <xpath expr="//field[@name='qty_available']" position="attributes">
+                <attribute name="invisible">1</attribute>                
+            </xpath>
+        </field>
+    </record>
+    
     <record id="view_product_template_search" model="ir.ui.view">
       <field name="name">product.template.search.in_use</field>
       <field name="model">product.template</field>

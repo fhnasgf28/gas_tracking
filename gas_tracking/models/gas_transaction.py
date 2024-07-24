@@ -19,6 +19,13 @@ class GasTransaction(models.Model):
         ('done', 'Done'),
     ], string='Transaction State', compute='_compute_transaction_state', store=True, default='available')
 
+    profit = fields.Float(compute='_compute_profit', string='Profit', store=True)
+
+    @api.depends('product_id')
+    def _compute_profit(self):
+        for record in self:
+            record.profit = record.product_id.list_price if record.transaction_state == 'done' else 0.0
+
     @api.model
     def create(self, vals):
         record = super(GasTransaction, self).create(vals)
@@ -27,17 +34,13 @@ class GasTransaction(models.Model):
             record.product_id.write({'state': 'in_use'})
             record.write({'transaction_state': 'in_use'})
         return record
-    
 
     @api.depends('product_id')
     def _compute_transaction_state(self):
         for record in self:
-            if record.product_id.state == 'in_use':
-                record.transaction_state = 'in_use'
-            elif record.product_id.state == 'empty':
-                record.transaction_state = 'empty'
-            elif record.product_id.state == 'available':
-                record.transaction_state = 'available'
+            state = record.product_id.state
+            if state in ['in_use', 'empty', 'available']:
+                record.transaction_state = state
             else:
                 record.transaction_state = 'available'
 
@@ -73,3 +76,4 @@ class GasTransaction(models.Model):
             if record.transaction_state == 'done':
                 raise exceptions.UserError("You cannot delete records with state 'Done'.")
         return super(GasTransaction, self).unlink()
+

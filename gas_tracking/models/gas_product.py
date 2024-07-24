@@ -14,6 +14,8 @@ class GasProduct(models.Model):
     ], string='Status', default='available')
 
     transaction_ids = fields.Many2one(comodel_name='gas.transaction', string='Due Date')
+    product_template_attribute_value_ids = fields.Many2many(comodel_name='product.template.attribute.value', string='id')
+    product_tmpl_id = fields.One2many(comodel_name='product.product', inverse_name='product_variant_id', string='id')
     
 
     @api.model

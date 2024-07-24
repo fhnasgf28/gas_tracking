@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Calendar View -->
+    <record id="view_gas_transaction_calendar" model="ir.ui.view">
+        <field name="name">gas.transaction.calendar</field>
+        <field name="model">gas.transaction</field>
+        <field name="arch" type="xml">
+            <calendar string="Gas Transactions" date_start="transaction_date" date_stop="due_date">
+                <field name="product_id"/>
+                <field name="customer_id"/>
+                <field name="transaction_date"/>
+                <field name="due_date"/>
+                <field name="transaction_state"/>
+            </calendar>
+        </field>
+    </record>
+
+    <!-- Kanban View -->
+    <record model="ir.ui.view" id="view_gas_transaction_kanban">
+        <field name="name">gas.transaction.kanban</field>
+        <field name="model">gas.transaction</field>
+        <field name="arch" type="xml">
+            <kanban class="o_gas_transaction_kanban_view" default_group_by="transaction_state" create="false">
+                <field name="product_id"/>
+                <field name="customer_id"/>
+                <field name="transaction_date"/>
+                <field name="due_date"/>
+                <field name="default_code"/>
+                <field name="last_refill_date"/>
+                <field name="employee_id"/>
+                <field name="transaction_state"/>
+                <field name="profit"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="d-flex flex-column p-0 oe_kanban_card oe_kanban_global_click">
+                            <div class="o_kanban_content p-0 m-0 position-relative row d-flex flex-fill">
+                                <div class="col-3 bg-primary p-2 text-center d-flex flex-column justify-content-center">
+                                    <div t-esc="record.transaction_date.raw_value.getDate()" class="o_event_fontsize_20"/>
+                                    <div>
+                                        <t t-esc="moment(record.transaction_date.raw_value).format('MMM')"/>
+                                        <t t-esc="record.transaction_date.raw_value.getFullYear()"/>
+                                    </div>
+                                </div>
+                                <div class="col-9 py-2 px-3 d-flex flex-column justify-content-between pt-3">
+                                    <div>
+                                        <div class="o_kanban_record_title o_text_overflow" t-att-title="record.product_id.value">
+                                            <field name="product_id"/>
+                                        </div>
+                                        <div t-if="record.customer_id.value">
+                                            <i class="fa fa-user" title="Customer"/>
+                                            <span class="o_text_overflow" t-esc="record.customer_id.value"/>
+                                        </div>
+                                        <div t-if="record.default_code.value">
+                                            <i class="fa fa-barcode" title="Serial Number"/>
+                                            <span class="o_text_overflow" t-esc="record.default_code.value"/>
+                                        </div>
+                                    </div>
+                                    <div>
+                                         <i class="fa fa-calendar" title="Due Date"/>
+                                        <strong>Due Date:</strong> <t t-esc="record.due_date.value"/>
+                                    </div>
+                                    <div class="o_kanban_record_bottom">
+                                        <div class="oe_kanban_bottom_left">
+                                            <i class="fa fa-calendar" title="Refill Date"/>
+                                            <strong>Last Refill:</strong> <t t-esc="record.last_refill_date.value"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Pivot View for Monthly Profit -->
+    <record id="view_gas_transaction_pivot" model="ir.ui.view">
+        <field name="name">gas.transaction.pivot</field>
+        <field name="model">gas.transaction</field>
+        <field name="arch" type="xml">
+            <pivot string="Monthly Profit">
+                <field name="transaction_date" type="date"/>
+                <field name="profit" type="float"/>
+                <field name="transaction_date" interval="month"/>
+                <field name="profit" sum="Total Profit"/>
+            </pivot>
+        </field>
+    </record>
+        <!-- Bar Chart View -->
+     <record id="view_gas_transaction_bar_chart" model="ir.ui.view">
+        <field name="name">gas.transaction.bar.chart</field>
+        <field name="model">gas.transaction</field>
+        <field name="arch" type="xml">
+            <graph string="Profit by Product" type="bar">
+                <!-- <field name="profit" type="float" sum="Total Profit"/> -->
+                <field name="product_id" type="char" string="Product"/>
+                <field name="transaction_date" type="date"/>
+            </graph>
+        </field>    
+    </record>
+    <!-- Action Window for Kanban View -->
+    <record id="gas_transaction_kanban_action" model="ir.actions.act_window">
+        <field name="name">Gas Tracking Overview</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">gas.transaction</field>
+        <field name="view_mode">calendar,kanban,pivot,graph</field>
+        <field name="view_id" ref="view_gas_transaction_kanban"/>
+    </record>
+
+    <!-- Menu Item for Transactions -->
+    <menuitem id="gas_overview_menu" name="Overview" parent="overview_menu_categ" action="gas_transaction_kanban_action" sequence="1"/>
+</odoo>

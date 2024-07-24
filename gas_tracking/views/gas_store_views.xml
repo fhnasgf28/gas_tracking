@@ -5,10 +5,18 @@
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//form/sheet/group" position="after">
-                <group>
-                    <field name="is_store"/>
-                </group>
+            <xpath expr="//notebook" position="inside">
+                <page string="Data Order" name="data_order">
+                    <field name="data_order">
+                        <tree editable="bottom">
+                            <field name="product_id"/>
+                            <field name="default_code" string="Serial Number"/>
+                            <field name="employee_id" string="Employee Responsible"/>
+                            <field name="due_date" string="Due Date"/>
+                            <!-- Add other fields from gas.transaction model if needed -->
+                        </tree>
+                    </field>
+                </page>
             </xpath>
         </field>
     </record>
@@ -19,7 +27,7 @@
         <field name="inherit_id" ref="base.view_partner_tree"/>
         <field name="arch" type="xml">
             <xpath expr="//tree" position="inside">
-                <field name="is_store"/>
+                <field name="data_order"/>
             </xpath>
         </field>
     </record>

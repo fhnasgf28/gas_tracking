@@ -8,5 +8,6 @@
     <menuitem id="staff_menu_categ" name="Staff" parent="gas_tracking_menu_root" sequence="2"/>
     <menuitem id="store_menu_categ" name="Store" parent="gas_tracking_menu_root" sequence="3"/>
     <menuitem id="transaction_menu_categ" name="Transaction" parent="gas_tracking_menu_root" sequence="4"/>
+    <menuitem id="overview_menu_categ" name="Overview" parent="gas_tracking_menu_root" sequence="5"/>
 </odoo>
 
