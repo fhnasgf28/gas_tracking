@@ -8,3 +8,6 @@ class ResPartner(models.Model):
         'customer_id', 
         string='Data Order'
     )
+
+    purchase_order = fields.One2many(comodel_name='purchase.order', inverse_name='partner_id', string='Purchase')
+    

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_purchase_order_report_wizard_form_xlsx" model="ir.ui.view">
+        <field name="name">Purchase Order Form Xlsx</field>
+        <field name="model">purchase.order.report.wizard.xlsx</field>
+        <field name="arch" type="xml">
+            <form string="Print Purchase Order Report Xlsx">
+                <sheet>
+                    <group>
+                        <field name="date_from"/>
+                        <field name="date_to"/>
+                        <field name="partner_id"/>
+                    </group>
+                    <footer>
+                        <button string="Print" type="object" name="action_purchase_order_report_xlsx" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_purchase_order_report_xlsx_wizard" model="ir.actions.act_window">
+        <field name="name">Print Purchase Order Report Xlsx</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">purchase.order.report.wizard.xlsx</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref=""/>
+        <field name="target">new</field>
+    </record>
+
+
+    <!-- Menu Item for Transactions -->
+    <menuitem id="gas_report_menu" name="Report" parent="overview_menu_categ" action="action_purchase_order_report_xlsx_wizard" sequence="1"/>
+
+</odoo>

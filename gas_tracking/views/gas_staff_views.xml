@@ -8,7 +8,7 @@
             <field name="inherit_id" ref="hr.view_employee_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//notebook" position="inside">
-                    <page string="Responsible Cylinders" name="responsible_cylinders">
+                    <page string="Responsible for Gas Product" name="responsible_cylinders">
                         <field name="responsible_for_cylinders">
                             <tree editable="bottom">
                                 <field name="product_id"/>
@@ -30,7 +30,7 @@
             <field name="inherit_id" ref="hr.view_employee_tree"/>
             <field name="arch" type="xml">
                 <xpath expr="//tree" position="inside">
-                    <field name="responsible_for_cylinders"/>
+                    <field name="responsible_for_cylinders" widget="one2many"/>
                 </xpath>
             </field>
         </record>

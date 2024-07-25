@@ -1,2 +1,3 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_gas_agent_gas_agent,gas_agent.gas_agent,model_gas_agent_gas_agent,base.group_user,1,1,1,1
+access_purchase_order_wizard_xlsx,purchase.order.report.wizard.xlsx,gas_tracking.model_purchase_order_report_wizard,,1,1,1,1
+access_template_purchase_order_wizard_xlsx,report.purchase_order_report_xlsx,gas_tracking.model_report_purchase_order_report_xlsx,,1,1,1,1

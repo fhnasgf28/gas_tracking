@@ -8,3 +8,4 @@ class HrEmployee(models.Model):
         'employee_id', 
         string='Responsible Cylinders'
     )
+    

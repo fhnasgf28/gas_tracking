@@ -27,7 +27,7 @@
     'version': '1.0',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'product', 'hr','crm','sale'],
+    'depends': ['base', 'product', 'hr','crm','sale','report_xlsx'],
 
     # always loaded
     'data': [
@@ -39,5 +39,7 @@
         'views/gas_transaction_views.xml',
         'views/gas_overview_views.xml',
         'views/purchase_views.xml',
+        'wizard/purchase_order_report_wizard_xlsx_views.xml',
+        'report/purchase_order_report.xml',
     ],
 }
